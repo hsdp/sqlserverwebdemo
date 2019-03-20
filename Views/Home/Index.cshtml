@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SqlServerWebDemo.Models.Author>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="container">
+    <h1 class="display-4">Books by Author</h1>
+    @if (Model.Any())
+    {
+        <ul>
+            @foreach (var author in Model.OrderBy(o => o.FirstName))
+            {
+                <li><h2>@author.FirstName @author.LastName<span class="float-right">@Html.ActionLink("Delete", "Delete", "Author", new { id = author.AuthorId })</span></h2>
+                    <ul class="list-group">
+                        @foreach (var book in author.Books.OrderBy(o => o.Title))
+                        {
+                            <li class="list-group-item">@book.Title<span class="float-right">@Html.ActionLink("Delete", "Delete", "Book", new { id = book.BookId })</span></li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+        <div>@Html.ActionLink("New Author", "create", "Author")</div>
+        <div>@Html.ActionLink("New Book", "create", "Book")</div>
+    }
+    else
+    {
+        <div>@Html.ActionLink("New Author", "create", "Author")</div>
+    }
+</div>

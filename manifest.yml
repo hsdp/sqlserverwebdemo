@@ -1,0 +1,15 @@
+---
+applications:
+  - name: mssql-web-demo
+    stack: cflinuxfs3
+    buildpacks: 
+      - dotnet_core_buildpack
+    disk_quota: 512M
+    memory: 512M
+    instances: 1
+    random-route: true
+    command: cd ${HOME} && ./SqlServerWebDemo --server.urls http://0.0.0.0:${PORT}
+    services:
+      - mssql-db
+    env:
+      ASPNETCORE_ENVIRONMENT: Development
